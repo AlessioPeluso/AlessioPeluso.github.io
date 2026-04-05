@@ -1,3 +1,1109 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coral Care Project — Restoring Mediterranean Corals in Portofino</title>
+<meta name="description" content="A coral restoration initiative by Reef Alert Network in collaboration with Portofino MPA and UNIVPM. Rescuing broken coral fragments and giving them a second chance at 45 meters in the Ligurian Sea.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --terracotta: #C85A3F;
+    --terracotta-deep: #8B3A28;
+    --terracotta-soft: #D97757;
+    --sea: #1E5A7A;
+    --sea-deep: #0A2E42;
+    --sea-mid: #2E7A9E;
+    --cream: #F5EDE0;
+    --cream-warm: #EFE4D0;
+    --sand: #E8D5B7;
+    --ink: #1C1614;
+    --ink-soft: #3A322E;
+    --coral: #E87A5C;
+
+    --font-display: "Fraunces", Georgia, serif;
+    --font-body: "IBM Plex Sans", -apple-system, sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+
+    --max-width: 1280px;
+    --reading-width: 680px;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--cream);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 100;
+    mix-blend-mode: multiply;
+  }
+
+  /* ============ NAVIGATION ============ */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 1.25rem 2rem;
+    background: rgba(245, 237, 224, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(28, 22, 20, 0.08);
+  }
+
+  .nav-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.15rem;
+    font-variation-settings: "SOFT" 50, "WONK" 1;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .logo span {
+    color: var(--terracotta);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    position: relative;
+  }
+
+  .nav-links a:hover {
+    color: var(--terracotta);
+  }
+
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--terracotta);
+    transition: width 0.25s ease;
+  }
+
+  .nav-links a:hover::after {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    min-height: 100vh;
+    padding: 8rem 2rem 4rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-meta {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--terracotta);
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-meta::before {
+    content: "";
+    width: 40px;
+    height: 1px;
+    background: var(--terracotta);
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144;
+    font-size: clamp(3rem, 9vw, 7.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 2rem;
+    max-width: 14ch;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.35s forwards;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--terracotta);
+    font-variation-settings: "SOFT" 80, "WONK" 1, "opsz" 144;
+  }
+
+  .hero-sub {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 48ch;
+    margin-bottom: 4rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(28, 22, 20, 0.15);
+    max-width: 780px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.7s forwards;
+  }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-variation-settings: "SOFT" 50, "WONK" 1;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1;
+    color: var(--terracotta);
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+
+  @media (max-width: 640px) {
+    .hero-stats {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  /* Decorative hero element */
+  .hero-decor {
+    position: absolute;
+    top: 50%;
+    right: -10%;
+    transform: translateY(-50%);
+    width: 60vw;
+    max-width: 700px;
+    height: 60vw;
+    max-height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%,
+      rgba(232, 122, 92, 0.15) 0%,
+      rgba(232, 122, 92, 0.08) 30%,
+      rgba(30, 90, 122, 0.05) 60%,
+      transparent 80%);
+    pointer-events: none;
+    z-index: 1;
+    animation: pulse 8s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: translateY(-50%) scale(1); }
+    50% { transform: translateY(-50%) scale(1.08); }
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ============ SECTION STRUCTURE ============ */
+  section {
+    padding: 7rem 2rem;
+    position: relative;
+  }
+
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--terracotta);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::before {
+    content: "";
+    width: 32px;
+    height: 1px;
+    background: var(--terracotta);
+  }
+
+  .section-label .num {
+    color: var(--ink-soft);
+    opacity: 0.6;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-variation-settings: "SOFT" 40, "WONK" 1, "opsz" 72;
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 2.5rem;
+    max-width: 20ch;
+  }
+
+  h2 em {
+    font-style: italic;
+    color: var(--terracotta);
+    font-variation-settings: "SOFT" 80, "WONK" 1, "opsz" 72;
+  }
+
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-variation-settings: "SOFT" 50, "WONK" 1;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    margin-bottom: 1.3rem;
+    max-width: var(--reading-width);
+  }
+
+  /* ============ CRISIS SECTION ============ */
+  .crisis {
+    background: var(--cream);
+  }
+
+  .crisis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .crisis-grid { grid-template-columns: 1fr; gap: 3rem; }
+  }
+
+  .pullquote {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-variation-settings: "SOFT" 70, "WONK" 1, "opsz" 72;
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    line-height: 1.35;
+    color: var(--terracotta-deep);
+    padding: 2rem 0;
+    border-top: 1px solid rgba(200, 90, 63, 0.3);
+    border-bottom: 1px solid rgba(200, 90, 63, 0.3);
+    margin: 3rem 0;
+    position: relative;
+  }
+
+  .pullquote::before {
+    content: """;
+    font-size: 5rem;
+    color: var(--terracotta);
+    position: absolute;
+    top: -1rem;
+    left: -1.5rem;
+    opacity: 0.3;
+    line-height: 1;
+  }
+
+  /* ============ PROJECT / PARTNERS ============ */
+  .project {
+    background: var(--sea-deep);
+    color: var(--cream);
+  }
+
+  .project .section-label {
+    color: var(--terracotta-soft);
+  }
+
+  .project .section-label::before {
+    background: var(--terracotta-soft);
+  }
+
+  .project h2 {
+    color: var(--cream);
+  }
+
+  .project h2 em {
+    color: var(--terracotta-soft);
+  }
+
+  .project p {
+    color: rgba(245, 237, 224, 0.8);
+  }
+
+  .partners {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 4rem;
+  }
+
+  @media (max-width: 900px) {
+    .partners { grid-template-columns: 1fr; }
+  }
+
+  .partner-card {
+    padding: 2.5rem 2rem;
+    border: 1px solid rgba(245, 237, 224, 0.15);
+    background: rgba(245, 237, 224, 0.03);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .partner-card:hover {
+    border-color: var(--terracotta-soft);
+    background: rgba(232, 122, 92, 0.08);
+    transform: translateY(-4px);
+  }
+
+  .partner-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--terracotta-soft);
+    transition: height 0.4s ease;
+  }
+
+  .partner-card:hover::before {
+    height: 100%;
+  }
+
+  .partner-role {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--terracotta-soft);
+    margin-bottom: 1rem;
+  }
+
+  .partner-card h3 {
+    color: var(--cream);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .partner-card p {
+    font-size: 0.95rem;
+    color: rgba(245, 237, 224, 0.7);
+    margin-bottom: 0;
+  }
+
+  /* ============ PROTOCOL (NUMBERED STEPS) ============ */
+  .protocol {
+    background: var(--cream-warm);
+  }
+
+  .steps {
+    margin-top: 4rem;
+    max-width: 900px;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 3rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid rgba(28, 22, 20, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .step:last-child {
+    border-bottom: none;
+  }
+
+  .step:hover {
+    padding-left: 1rem;
+  }
+
+  .step:hover .step-num {
+    color: var(--terracotta);
+  }
+
+  .step-num {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--ink-soft);
+    transition: color 0.3s ease;
+  }
+
+  .step-content h3 {
+    font-size: 1.35rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .step-content p {
+    font-size: 1rem;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 640px) {
+    .step { grid-template-columns: 1fr; gap: 1rem; }
+    .step-num { font-size: 2.5rem; }
+  }
+
+  /* ============ NUMBERS / BY THE NUMBERS ============ */
+  .numbers {
+    background: var(--terracotta);
+    color: var(--cream);
+    padding: 6rem 2rem;
+  }
+
+  .numbers .section-label {
+    color: var(--cream);
+    opacity: 0.9;
+  }
+
+  .numbers .section-label::before {
+    background: var(--cream);
+    opacity: 0.9;
+  }
+
+  .numbers h2 {
+    color: var(--cream);
+    margin-bottom: 4rem;
+  }
+
+  .numbers h2 em {
+    color: var(--sand);
+  }
+
+  .numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(245, 237, 224, 0.2);
+    border: 1px solid rgba(245, 237, 224, 0.2);
+  }
+
+  @media (max-width: 900px) {
+    .numbers-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .big-num {
+    padding: 3rem 2rem;
+    background: var(--terracotta);
+  }
+
+  .big-num-val {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-variation-settings: "SOFT" 40, "WONK" 1, "opsz" 144;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    line-height: 1;
+    color: var(--cream);
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.02em;
+  }
+
+  .big-num-label {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--sand);
+    line-height: 1.4;
+  }
+
+  /* ============ SPECIES ============ */
+  .species {
+    background: var(--cream);
+    padding: 7rem 2rem;
+  }
+
+  .species-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-top: 4rem;
+  }
+
+  @media (max-width: 900px) {
+    .species-list { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  .species-card {
+    padding-top: 2rem;
+    border-top: 2px solid var(--terracotta);
+  }
+
+  .species-card h3 {
+    font-style: italic;
+    font-variation-settings: "SOFT" 60, "WONK" 1;
+    color: var(--sea-deep);
+    margin-bottom: 0.5rem;
+  }
+
+  .species-common {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--terracotta);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .species-card p {
+    font-size: 0.95rem;
+    margin-bottom: 0;
+  }
+
+  /* ============ CTA / GET INVOLVED ============ */
+  .cta {
+    background: var(--sea);
+    color: var(--cream);
+    padding: 8rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 50%;
+    height: 140%;
+    background: radial-gradient(ellipse at center,
+      rgba(232, 122, 92, 0.2) 0%,
+      rgba(232, 122, 92, 0.05) 40%,
+      transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cta .section-label {
+    color: var(--sand);
+  }
+
+  .cta .section-label::before {
+    background: var(--sand);
+  }
+
+  .cta h2 {
+    color: var(--cream);
+    margin-bottom: 3rem;
+  }
+
+  .cta h2 em {
+    color: var(--coral);
+  }
+
+  .cta p {
+    color: rgba(245, 237, 224, 0.85);
+    font-size: 1.15rem;
+    max-width: 60ch;
+    margin-bottom: 3rem;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1.1rem 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    border: 1px solid var(--cream);
+    color: var(--cream);
+    background: transparent;
+  }
+
+  .btn:hover {
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+    transform: translateY(-2px);
+  }
+
+  .btn-primary {
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+  }
+
+  .btn-primary:hover {
+    background: var(--terracotta-deep);
+    border-color: var(--terracotta-deep);
+  }
+
+  .btn::after {
+    content: "→";
+    transition: transform 0.25s ease;
+  }
+
+  .btn:hover::after {
+    transform: translateX(4px);
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 4rem 2rem 2rem;
+  }
+
+  .footer-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(245, 237, 224, 0.15);
+  }
+
+  @media (max-width: 768px) {
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  .footer-brand {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-variation-settings: "SOFT" 50, "WONK" 1;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--cream);
+  }
+
+  .footer-brand span { color: var(--terracotta-soft); }
+
+  .footer-tagline {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    color: rgba(245, 237, 224, 0.7);
+    font-size: 1rem;
+    max-width: 40ch;
+  }
+
+  .footer-col h4 {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--terracotta-soft);
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-col a {
+    display: block;
+    color: rgba(245, 237, 224, 0.75);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 0.6rem;
+    transition: color 0.2s ease;
+  }
+
+  .footer-col a:hover {
+    color: var(--terracotta-soft);
+  }
+
+  .footer-bottom {
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(245, 237, 224, 0.5);
+  }
+
+  /* ============ SCROLL REVEAL ============ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVIGATION ============ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">Coral <span>Care</span></a>
+    <ul class="nav-links">
+      <li><a href="#crisis">The Crisis</a></li>
+      <li><a href="#project">The Project</a></li>
+      <li><a href="#protocol">Protocol</a></li>
+      <li><a href="#species">Species</a></li>
+      <li><a href="#involved">Get Involved</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-decor"></div>
+  <div class="hero-inner">
+    <div class="hero-meta">Portofino Marine Protected Area — Ligurian Sea</div>
+    <h1>Restoring reefs, <em>one brick</em> at a time.</h1>
+    <p class="hero-sub">A Mediterranean coral restoration project rescuing broken fragments at 45 metres, one terracotta brick at a time — by Reef Alert Network, Portofino MPA, and the Polytechnic University of Marche.</p>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">70</div>
+        <div class="stat-label">Coral fragments<br>rescued</div>
+      </div>
+      <div>
+        <div class="stat-num">45m</div>
+        <div class="stat-label">Nursery<br>depth</div>
+      </div>
+      <div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">Nursery<br>structures</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Partner<br>organizations</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ THE CRISIS ============ -->
+<section class="crisis" id="crisis">
+  <div class="container">
+    <div class="section-label"><span class="num">01</span> The Crisis</div>
+    <h2>A forest <em>stripped to bone.</em></h2>
+    <div class="crisis-grid reveal">
+      <div>
+        <p>The Mediterranean Sea hosts a remarkable diversity of coral species that most people — including many divers — do not associate with temperate waters. Gorgonians form dense, fan-shaped colonies on rocky walls, creating three-dimensional habitats that shelter hundreds of other species. They are habitat engineers: remove them, and the wall becomes a parking lot where there was once a neighborhood.</p>
+        <p>Marine heat waves have become more frequent and more intense in the Ligurian Sea over the past two decades. When water temperatures exceed the thermal tolerance of these species, the result is mass mortality — living tissue dies, sloughs off, and colonies that took decades to grow are reduced to bare skeletons within a single summer.</p>
+      </div>
+      <div>
+        <div class="pullquote">The gorgonians were denuded. What remained were bare skeletons — still standing in the shape of fans, but holding nothing alive.</div>
+        <p>Anchoring, lost fishing lines, and careless diver contact compound the damage. The fragments that result — a broken branch of <em>Eunicella</em>, a detached piece of red coral — would, without intervention, fall to the sediment and perish. Coral Care was built to rescue what can still be saved.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE PROJECT / PARTNERS ============ -->
+<section class="project" id="project">
+  <div class="container">
+    <div class="section-label"><span class="num">02</span> The Project</div>
+    <h2>Three partners. <em>One mission.</em></h2>
+    <p class="reveal">The Coral Care Project is a collaboration between three organizations, each bringing something the others could not provide alone. Conservation projects cannot succeed if they are driven by science alone, by institutions alone, or by passionate divers alone. You need all three.</p>
+
+    <div class="partners reveal">
+      <div class="partner-card">
+        <div class="partner-role">Operations</div>
+        <h3>Reef Alert Network</h3>
+        <p>The nonprofit conservation diving organization that provides the operational framework, the trained volunteer divers, and the capacity to execute complex underwater operations.</p>
+      </div>
+      <div class="partner-card">
+        <div class="partner-role">Institution</div>
+        <h3>Portofino MPA Consortium</h3>
+        <p>One of Italy's oldest marine protected areas. Provides institutional backing, site access, and regulatory oversight — without which this work would not be possible.</p>
+      </div>
+      <div class="partner-card">
+        <div class="partner-role">Science</div>
+        <h3>UNIVPM</h3>
+        <p>The Polytechnic University of Marche provides the scientific foundation: the protocols, the research expertise, and the specialized resin tested for soft-coral attachment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROTOCOL ============ -->
+<section class="protocol" id="protocol">
+  <div class="container">
+    <div class="section-label"><span class="num">03</span> The Protocol</div>
+    <h2>From fragment <em>to brick.</em></h2>
+    <p class="reveal">A critical principle guides the entire process: minimize stress on the coral. Everything that can be done underwater, is done underwater. In less than an hour, rescued fragments are already placed on the nursery structures.</p>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Collection</h3>
+          <p>Viable fragments — with living tissue and active polyps — are carefully detached or retrieved along the walls of the MPA, typically between 25 and 35 metres depth.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>Triage</h3>
+          <p>Underwater, each fragment is assessed and irreversibly damaged or necrotic tissue is cut away. Removing the dead to save the living — a surgical step that requires a trained eye.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Placement of bricks</h3>
+          <p>Terracotta bricks, handmade by a small family company in Tuscany, are positioned independently on the nursery tables. Pre-labeled, inert, porous, and heavy enough to stay in place.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h3>Attachment</h3>
+          <p>Each coral fragment is secured to its assigned brick with a specialized resin extensively tested by UNIVPM — chosen over mechanical fixation for soft-coral compatibility.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <h3>Identification</h3>
+          <p>Every fragment gets a unique code. "1T1.1" means: day 1, Torretta dive site, coral 1, fragment 1. Traceability is the foundation of the monitoring that follows.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SPECIES ============ -->
+<section class="species" id="species">
+  <div class="container">
+    <div class="section-label"><span class="num">04</span> The Species</div>
+    <h2>What we are <em>trying to save.</em></h2>
+    <p class="reveal">Three species sit at the heart of the project — slow-growing, habitat-engineering Mediterranean corals whose populations have been hit hard by heat waves and human activity.</p>
+
+    <div class="species-list reveal">
+      <div class="species-card">
+        <h3>Paramuricea clavata</h3>
+        <span class="species-common">Violescent sea whip</span>
+        <p>Large purple-red gorgonian that forms dense colonies on rocky walls. Among the species most severely impacted by Mediterranean marine heat waves.</p>
+      </div>
+      <div class="species-card">
+        <h3>Eunicella cavolini</h3>
+        <span class="species-common">Yellow gorgonian</span>
+        <p>Golden-yellow fan-shaped gorgonian common on Mediterranean rocky substrates, creating three-dimensional habitat for fish and invertebrates.</p>
+      </div>
+      <div class="species-card">
+        <h3>Corallium rubrum</h3>
+        <span class="species-common">Red coral</span>
+        <p>The iconic Mediterranean precious red coral. Grows just a few millimetres per year, making every lost colony a decades-long loss.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NUMBERS ============ -->
+<section class="numbers">
+  <div class="container">
+    <div class="section-label"><span class="num">05</span> By the Numbers</div>
+    <h2>The work <em>so far.</em></h2>
+    <div class="numbers-grid reveal">
+      <div class="big-num">
+        <div class="big-num-val">20</div>
+        <div class="big-num-label">Colonies placed<br>Dec 2025</div>
+      </div>
+      <div class="big-num">
+        <div class="big-num-val">15</div>
+        <div class="big-num-label">Colonies placed<br>Jan 2026</div>
+      </div>
+      <div class="big-num">
+        <div class="big-num-val">35</div>
+        <div class="big-num-label">Colonies placed<br>Mar 2026</div>
+      </div>
+      <div class="big-num">
+        <div class="big-num-val">70</div>
+        <div class="big-num-label">Total fragments<br>in nurseries</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA / GET INVOLVED ============ -->
+<section class="cta" id="involved">
+  <div class="cta-inner">
+    <div class="section-label"><span class="num">06</span> Get Involved</div>
+    <h2>The Mediterranean needs <em>your hands.</em></h2>
+    <p>If you are a technical diver, a researcher, a supporter, or simply someone who cares — there is a place for you in this work. Explore the project, follow its progress, or reach out directly.</p>
+    <div class="cta-buttons">
+      <a href="https://www.reefalert.org/" class="btn btn-primary" target="_blank" rel="noopener">Visit Reef Alert Network</a>
+      <a href="https://sketchfab.com/reefalert" class="btn" target="_blank" rel="noopener">Explore 3D Models</a>
+      <a href="https://www.instagram.com/reefalertnetwork/" class="btn" target="_blank" rel="noopener">Follow on Instagram</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">Coral <span>Care</span></div>
+        <p class="footer-tagline">One fragment at a time, one brick at a time — giving Mediterranean reefs a chance.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Project</h4>
+        <a href="#crisis">The Crisis</a>
+        <a href="#project">The Partnership</a>
+        <a href="#protocol">Scientific Protocol</a>
+        <a href="#species">Species</a>
+      </div>
+      <div class="footer-col">
+        <h4>Partners</h4>
+        <a href="https://www.reefalert.org/" target="_blank" rel="noopener">Reef Alert Network</a>
+        <a href="https://www.portofinoamp.it/" target="_blank" rel="noopener">Portofino MPA</a>
+        <a href="https://www.univpm.it/" target="_blank" rel="noopener">UNIVPM</a>
+        <a href="https://portofinodivers.com/" target="_blank" rel="noopener">Portofino Divers</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Coral Care Project</div>
+      <div>Portofino · Ligurian Sea · Italy</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Simple scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
